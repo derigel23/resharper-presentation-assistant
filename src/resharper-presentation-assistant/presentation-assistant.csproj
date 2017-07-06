@@ -7,11 +7,12 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
-     <TargetFramework>net45</TargetFramework>
-     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-     <AssemblyName>JetBrains.ReSharper.Plugins.PresentationAssistant</AssemblyName>
-     <RootNamespace>JetBrains.ReSharper.Plugins.PresentationAssistant</RootNamespace>
+    <TargetFramework>net45</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AssemblyName>JetBrains.ReSharper.Plugins.PresentationAssistant</AssemblyName>
+    <RootNamespace>JetBrains.ReSharper.Plugins.PresentationAssistant</RootNamespace>
+    <HostFullIdentifier>ReSharperPlatformVs14Exp</HostFullIdentifier>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
