@@ -46,10 +46,10 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
         }
 
         // Note that this can be called if e.g. the Layouter's AnchoringRect changes
-        protected override void OnLayouterResultChanged(PropertyChangedEventArgs<LayoutResult> args)
+        protected override void OnLayouterChanged(IPopupLayouter layouter)
         {
             var dpiResolution = DpiResolutions.FromAvalonElement(window);
-            var location = args.New.Bounds.ToAvalonRect(dpiResolution);
+            var location = layouter.Layout.Value.Bounds.ToAvalonRect(dpiResolution);
             window.Top = location.Top;
             window.Left = location.Left;
         }
