@@ -64,7 +64,8 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
             if (context != null)
             {
                 lifetime.AddBracket(() => Layouter = context.CreateLayouter(lifetime), () => Layouter = null);
-                Layouter?.Layout.Change.Advise_HasNew(lifetime, OnLayouterResultChanged);
+                Layouter?.Layout.Change.Advise_HasNew(lifetime, x => OnLayouterChanged(Layouter));
+                (Layouter as DockingLayouter)?.Anchor.Change.Advise_HasNew(lifetime, x => OnLayouterChanged(Layouter));
 
                 context.AnyOtherAction += OnContextOwnerAnyActionPerformed;
                 context.Scroll += OnContextOwnerScroll;
@@ -78,7 +79,7 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
             popupWindowManager?.PopupWindows.Add(lifetime, this);
         }
 
-        protected abstract void OnLayouterResultChanged(PropertyChangedEventArgs<LayoutResult> args);
+        protected abstract void OnLayouterChanged(IPopupLayouter layouter);
 
         private void DetachEvents()
         {
@@ -158,7 +159,12 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
 
         public virtual bool ShowWindow()
         {
-            ShowWindowCore();
+            var windowContext = Context as PresentationAssistantPopupWindowContext;
+            var dockingLayouter = Layouter as DockingLayouter;
+            if (windowContext != null && dockingLayouter != null)
+                dockingLayouter.Anchor.SetValue (windowContext.GetAnchor (lifetime));
+
+            ShowWindowCore ();
 
             // TODO
             return true;

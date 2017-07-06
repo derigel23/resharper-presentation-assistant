@@ -29,9 +29,14 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
 
         public PopupWindowMutex Mutex { get; private set; }
 
+        public AnchoringRect GetAnchor(Lifetime lifetime)
+        {
+            return WindowAnchoringRect.AnchorToActiveMainWindowSafe(lifetime, mainWindow, windowsHookManager);
+        }
+
         public override IPopupLayouter CreateLayouter(Lifetime lifetime)
         {
-            var anchor = WindowAnchoringRect.AnchorToActiveMainWindowSafe(lifetime, mainWindow, windowsHookManager);
+            var anchor = GetAnchor(lifetime);
             var dispositions = new[] {new Anchoring2D(Anchoring.MiddleWithin, Anchoring.FarWithin)};
 
             // Padding is in pixels...
