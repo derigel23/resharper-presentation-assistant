@@ -31,13 +31,13 @@ namespace JetBrains.ReSharper.Plugins.PresentationAssistant
 
         public override IPopupLayouter CreateLayouter(Lifetime lifetime)
         {
-            var anchor = WindowAnchoringRect.AnchorToPrimaryMainWindowSafe(lifetime, mainWindow, windowsHookManager);
+            var anchor = WindowAnchoringRect.AnchorToActiveMainWindowSafe(lifetime, mainWindow, windowsHookManager);
             var dispositions = new[] {new Anchoring2D(Anchoring.MiddleWithin, Anchoring.FarWithin)};
 
             // Padding is in pixels...
             unsafe
             {
-                var dpi = DpiResolutions.FromHWnd((void*) mainWindow.GetPrimaryWindow().Handle);
+                var dpi = DpiResolutions.FromHWnd((void*) mainWindow.GetActiveWindow().Handle);
                 var padding = 75.0/DpiResolution.DeviceIndependent96DpiValue*dpi.DpiY;
                 return new DockingLayouter(lifetime, anchor, dispositions, (int)padding);
             }
